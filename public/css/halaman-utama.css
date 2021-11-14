@@ -1,0 +1,17 @@
+.carousel-item {
+    margin-top: 40px;
+    margin-left: 240px;
+    height: 640px;
+    width: 1440px;
+}
+
+.carousel-item img {
+    position: absolute;
+    object-fit: cover;
+    min-height: 640px;
+}
+
+.welcome {
+    margin-top: 40px;
+    margin-left: 240px;
+}

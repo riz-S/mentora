@@ -17,7 +17,7 @@ class TambahSaldoControl extends Controller
         $kode = $request->kode;
         $voucher = Voucher::where('kode',$kode)->get()[0];
         $mentee = Auth::user();
-        $mentee->saldo = $voucher->balance;
+        $mentee->saldo += $voucher->balance;
         $mentee -> save();
         $voucher-> statusPakai =1;
         $voucher-> save();

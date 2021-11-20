@@ -15,7 +15,7 @@ class CariMentorControl extends Controller
         $listSkill = Skill::all();
         $listCategory = Category::all();
         return view('halaman-cari-mentor', ['listMentor' => $listMentor, 'skills' => $listSkill, 'categories' => $listCategory, 
-        'keyword'=>'','sort' =>'', 'filterCategory'=>'', 'filterSkill'=>'','filterHarga'=>'']);
+        'keyword'=>'','sort' =>'', 'filterCategory'=>'', 'filterSkill'=>[],'filterHarga'=>'']);
     }
 
     public function getMentors(Request $request){
@@ -25,10 +25,10 @@ class CariMentorControl extends Controller
         $listCategory = Category::all();
         if(!empty($daftarMentor)){
             return view('halaman-cari-mentor', ['listMentor' => $daftarMentor,'skills' => $listSkill, 'categories' => $listCategory, 
-            'keyword'=>$keyword, 'sort' =>'', 'filterCategory'=>'', 'filterSkill'=>'','filterHarga'=>'']);
+            'keyword'=>$keyword, 'sort' =>'', 'filterCategory'=>'', 'filterSkill'=>[],'filterHarga'=>'']);
         } else{
             return view('halaman-cari-mentor',['listMentor' => 'empty','skills' => $listSkill, 'categories' => $listCategory, 
-            'keyword'=>$keyword, 'sort' =>'', 'filterCategory'=>'', 'filterSkill'=>'','filterHarga'=>'']);
+            'keyword'=>$keyword, 'sort' =>'', 'filterCategory'=>'', 'filterSkill'=>[],'filterHarga'=>'']);
         }
     }
 

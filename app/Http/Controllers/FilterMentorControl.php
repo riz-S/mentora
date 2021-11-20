@@ -15,13 +15,13 @@ class FilterMentorControl extends Controller
         $listCategory = Category::all();
         $keyword = $request->keyword;
         $sort = $request->sort;
-        $listMentor = json_decode($request->listMentor);
+        $listMentor = is_array(json_decode($request->listMentor))?json_decode($request->listMentor):array(json_decode($request->listMentor));
         $kategori = $request->filterCategory;
-        $skill[0] = $request->filterSkill;
+        $skill = $request->filterSkill;
         $rentangHarga = ($request->filterHarga!=null)?explode(",",$request->filterHarga):null;
         if($kategori!=null){
             $category = function ($var) use ($kategori) {return $var->category->name == $kategori;};
-            $listMentor = array_filter($listMentor, $category);
+            $listMentor = array_values(array_filter($listMentor, $category));
         }
         if($skill!=null){
             $skill = function ($var) use ($skill) {
@@ -31,18 +31,18 @@ class FilterMentorControl extends Controller
                 }
                 return $count==sizeof($skill);
             };
-            $listMentor = array_filter($listMentor, $skill);
+            $listMentor = array_values(array_filter($listMentor, $skill));
         }
         if($rentangHarga!=null){
             $range = function ($var) use ($rentangHarga) {return $var->price >= $rentangHarga[0] && $var->price <= $rentangHarga[1];};
-            $listMentor = array_filter($listMentor, $range);
+            $listMentor = array_values(array_filter($listMentor, $range));
         }
         if(!empty($listMentor)){
             return view('halaman-cari-mentor', ['listMentor' => $listMentor,'skills' => $listSkill, 'categories' => $listCategory, 
-            'keyword'=>$keyword, 'sort' =>$sort, 'filterCategory'=>$kategori, 'filterSkill'=>$request->filterSkill,'filterHarga'=>$request->filterHarga]);
+            'keyword'=>$keyword, 'sort' =>$sort, 'filterCategory'=>$kategori, 'filterSkill'=>($skill==null)?[]:$request->filterSkill,'filterHarga'=>$request->filterHarga]);
         } else{
             return view('halaman-cari-mentor', ['listMentor' => 'empty','skills' => $listSkill, 'categories' => $listCategory, 
-            'keyword'=>$keyword, 'sort' =>$sort, 'filterCategory'=>$kategori, 'filterSkill'=>$request->filterSkill,'filterHarga'=>$request->filterHarga]);
+            'keyword'=>$keyword, 'sort' =>$sort, 'filterCategory'=>$kategori, 'filterSkill'=>($skill==null)?[]:$request->filterSkill,'filterHarga'=>$request->filterHarga]);
         }
     }
 }

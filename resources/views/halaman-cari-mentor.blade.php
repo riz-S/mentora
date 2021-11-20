@@ -49,11 +49,7 @@
               <select name="sort" class="form-select" style="width: 350px;" aria-label="Default select example" onchange="this.form.submit()">
                 <option value="">Urutkan</option>
                 @foreach(array('Newest','Most Experienced','Cheapest') as $option)
-                  @if($sort==$option)
-                    <option selected>{{$option}}</option>
-                  @else
-                    <option>{{$option}}</option>
-                  @endif
+                  <option {{($sort==$option)?"selected":""}}>{{$option}}</option>
                 @endforeach
               </select>
               <input type="hidden" name="listMentor" value="{{json_encode($listMentor)}}">
@@ -69,23 +65,19 @@
               <select name="filterCategory" class="form-select me-3 mt-2" style="width: 150px;" aria-label="Default select example" onchange="this.form.submit()">
                 <option value="">Kategori</option>
                 @foreach($categories as $category)
-                  @if($filterCategory==$category->name)
-                    <option selected>{{$category->name}}</option>
-                  @else
-                    <option>{{$category->name}}</option>
-                  @endif
+                  <option {{($filterCategory==$category->name)?"selected":""}}>{{$category->name}}</option>
                 @endforeach
               </select>
-              <select name="filterSkill" class="form-select me-3 mt-2" style="width: 150px;" aria-label="Default select example" onchange="this.form.submit()">
-                <option value="">Skill</option>
-                @foreach($skills as $skill)
-                  @if($filterSkill==$skill->name)
-                    <option selected>{{$skill->name}}</option>
-                  @else
-                    <option>{{$skill->name}}</option>
-                  @endif
-                @endforeach
-              </select>
+              <div class="form-select me-3 mt-2 " style="width: 150px;" aria-label="Default select example">
+                <button class="btn text-start" style="width: 130px; " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Skill
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  @foreach($skills as $skill)
+                    <p class="dropdown-item"><input type="checkbox" name="filterSkill[]" value="{{$skill->name}}" onchange="this.form.submit()" {{in_array($skill->name, $filterSkill)?"checked":""}}>&nbsp; {{$skill->name}}</p>
+                  @endforeach
+                </div>
+              </div>
               <select name="filterHarga" class="form-select me-3 mt-2" style="width: 150px;" aria-label="Default select example" onchange="this.form.submit()">
                 <option value="">Harga</option>
                 @if($filterHarga=="100000,200000")
@@ -122,10 +114,13 @@
                 </div>
                 <div class="col-6">
                   <div class="row">
-                    <h4>{{$mentor->name}}</h4>
+                    <a href="/mentor/{{$mentor->id}}"><h4>{{$mentor->name}}</h4></a> 
                     <p>{{$mentor->category->name}}</p>
                   </div>
-                    <button type="button" class="my-2 btn btn-outline-dark  btn-md">{{$mentor->category->name}}</button>
+                    <!-- <button type="button" class="my-2 btn btn-outline-dark  btn-md">{{$mentor->category->name}}</button> -->
+                    @foreach($mentor->skill as $skill)
+                      <button type="button" class="my-2 btn btn-outline-dark  btn-md">{{$skill->name}}</button>
+                    @endforeach
                     <div class="desc my-2">
                       {{$mentor->description}}
                     </div>
@@ -143,37 +138,8 @@
               </div>
             @endforeach
           @else
-            <h1>Tidak ada mentor ditemukan</h1>
+            <h1>Mentor tidak ditemukan</h1>
           @endif
-          <div class="row mt-5">
-            <div class="col-2 my-2 d-flex justify-content-center">
-                <img src="{{asset('img/pp.png')}}" class="rounded-1" style="max-width: 130px; max-height: 130px;">
-            </div>
-            <div class="col-6">
-              <div class="row">
-                <h4>Andi Rafly</h4>
-                <p>Back-end Engineer di Tokopedia</p>
-              </div>
-                <button type="button" class="my-2 btn btn-outline-dark  btn-md">Back-end</button>
-                <button type="button" class="my-2 btn btn-outline-dark  btn-md">Data Science</button>
-                <button type="button" class="my-2 btn btn-outline-dark  btn-md">NodeJS</button>
-                <div class="desc my-2">
-                  Halo, saya adalah seorang Back-end Engineer di Tokopedia. Saya memiliki pengalaman dalam penelitian, strategi, perancangan algoritma, dan berkolaborasi dengan tim multi-disiplin dengan
-                  menjunjung tinggi kerjasama. Silakan hubungi saya.
-                </div>
-            </div>
-            <div class="col-3 border-start border-secondary border-5">
-              <div class="mx-5 my-2 bg-transparent text-center">
-                  <div class="row my-4">
-                      <h4>Rp100.000</h4>
-                  </div>
-                  <div class="row mx-3 my-3">
-                      <button type="button" class="btn btn-primary btn-lg">Lihat Profil</button>
-                  </div>
-                  
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

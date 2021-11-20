@@ -41,7 +41,6 @@
                         style="text-decoration: none; color: #102E44;"><i class="fab fa-linkedin fa-lg"></i></a>
                 </div>
                 <hr>
-                <button type="button" class="my-2 btn btn-outline-dark  btn-md">{{$mentor->category->name}}</button>
                 <div class="desc my-2">
                     {{$mentor->description}}
                 </div>

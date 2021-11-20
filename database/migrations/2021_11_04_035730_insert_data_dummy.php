@@ -29,13 +29,18 @@ class InsertDataDummy extends Migration
         DB::table('category')->insert([
             ['name' => 'UI/UX'],
             ['name' => 'Project Manager'],
-            ['name' => 'Businesse & Management']
+            ['name' => 'Business & Management'],
+            ['name' => 'Front-end'],
+            ['name' => 'Back-end']
         ]);
 
         DB::table('skill')->insert([
             ['name' => 'Prototyping'],
             ['name' => 'Design'],
-            ['name' => 'Portofolio']
+            ['name' => 'Portofolio'],
+            ['name' => 'Python'],
+            ['name' => 'Product Management'],
+            ['name' => 'Machine Learning']
         ]);
 
         DB::table('mentor')->insert([

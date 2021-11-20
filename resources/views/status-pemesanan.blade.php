@@ -25,7 +25,7 @@
     <div class="container mt-5">
     <h4 class="mb-3">Status Pemesanan</h4>
     @if($listTransaksi=='empty')
-      <h1>Tidak ada status pemesanan</h1>
+      <h1>Kamu belum melakukan pemesanan mentor. Yuk segera pesan</h1>
     @else
       @foreach($listTransaksi as $transaksi)
         <div class="card bg-light text-dark">
@@ -47,29 +47,22 @@
               </div>
             </div>
             <span style="position: absolute; top: 28px; right: 28px; text-align: right;">
+              @switch($transaksi->statusPemesanan)
+                @case("Diterima")
+                  <i class="fas fa-check-circle me-2" style="color: green"></i>
+                  @break
+                @case("Pending")
+                  <i class="far fa-clock me-2" ></i>
+                  @break
+                @case("Ditolak")
+                  <i class="fas fa-times-circle me-2" style="color: red"></i>
+                  @break
+              @endswitch
               <b>{{$transaksi->statusPemesanan}}<br><span style="font-size: smaller; ">Rp.{{number_format(($transaksi->mentor->price*$transaksi->jumlahSesi), 0,',','.')}}</span></b>
             </span>
           </div>
         </div>
       @endforeach
-      <div class="card bg-light text-dark mt-3">
-        <div class="card-body">
-            <div class="row mt-3">
-            <div class="col-2 my-2 d-flex justify-content-center">
-                <img src="{{asset('bieber.jpg')}}" class="rounded-1" style="max-width: 130px; max-height: 130px;">
-            </div>
-            <div class="col-6">
-                <h4>Andi Rafly</h4>
-                <button type="button" class="my-2 btn btn-outline-dark  btn-md">UI/UX</button>
-                <button type="button" class="my-2 btn btn-outline-dark  btn-md">Project Manager</button>
-                <button type="button" class="my-2 btn btn-outline-dark  btn-md">Business & Management</button>
-            </div>
-            </div>
-            <span style="position: absolute; top: 28px; right: 28px; text-align: right;">
-              <b>Pending<br><span style="font-size: smaller; ">Rp100.000</span></b>
-            </span>
-        </div>
-      </div>
     @endif
     </div>
 

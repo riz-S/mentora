@@ -51,10 +51,15 @@
             </div>
           </form>
         </div>
+        @if ($message = Session::get('error'))
+          <x-alert msg="{{$message}}"></x-alert>
+        @elseif($errors->any())
+          <x-alert msg="{{$errors->first()}}"></x-alert>
+        @endif
       </div>
     </div>
 
-    
+
 </body>
 
 </html>

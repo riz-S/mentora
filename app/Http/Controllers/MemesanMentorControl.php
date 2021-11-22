@@ -29,7 +29,7 @@ class MemesanMentorControl extends Controller
         $mentorPrice = $jumlahSesi * ($mentor->price);
 
         if (($mentee-> saldo) < $mentorPrice){
-            return redirect()->back()->with('error','anda tidak punya cukup saldo!');
+            return redirect()->back()->with('error','Anda tidak punya cukup saldo!');
 
         } else {
             $saldoBaru = ($mentee->saldo) - $mentorPrice;

@@ -32,17 +32,12 @@ class GantiPasswordControl extends Controller
             return redirect()->back()->with("error","Password baru tidak boleh sama dengan password lama.");
         }
 
-        $validatedData = $request->validate([
-            'oldPass' => 'required',
-            'newPass' => 'required|string|min:8|confirmed',
-        ]);
-
         //Change Password
         $user = Auth::user();
         $user->password = bcrypt($newPass);
         $user->save();
 
-        return redirect()->back()->with("success","Password terganti!");
+        return redirect()->back();
 
     }
 }

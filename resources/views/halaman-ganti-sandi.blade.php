@@ -19,7 +19,8 @@
       <x-sidebar></x-sidebar>
       <div class="col-9">
         <div class="card bg-light text-dark">
-          <form method="POST" action="{{route('changePass')}}" class="needs-validation" novalidate>
+          <form method="POST" action="{{route('changePass')}}" class="needs-validation" novalidate 
+          oninput='inputConfirmPassword.setCustomValidity(inputConfirmPassword.value != inputPassword.value ? true : "")'>
             @csrf
             <div class="card-header bg-transparent border-0 m-3 mb-0">
               <h4>Ganti Password</h4>
@@ -27,7 +28,7 @@
             <div class="card-body">
               <div class="form-group mt-0 m-3">
                 <label>Password Lama</label>
-                <input name="oldPass" type="password" class="form-control">
+                <input name="oldPass" type="password" class="form-control" required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
                 <div class="invalid-feedback" role="alert">
                     Password harus terdiri dari satu angka, satu huruf kapital dan huruf kecil, serta
                     minimal
@@ -37,7 +38,7 @@
               </div>
               <div class="form-group m-3 mt-0">
                 <label>Password Baru</label>
-                <input name="newPass" type="password" class="form-control">
+                <input name="newPass" type="password" class="form-control"  id="inputPassword" required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
                 <div class="invalid-feedback" role="alert">
                     Password harus terdiri dari satu angka, satu huruf kapital dan huruf kecil, serta
                     minimal
@@ -47,7 +48,7 @@
               </div>
               <div class="form-group m-3 mt-0">
                 <label>Konfirmasi Password Baru</label>
-                <input name="newPass_confirmation" type="password" class="form-control">
+                <input name="newPass_confirmation" type="password" class="form-control" id="inputConfirmPassword" required>
                 <div class="invalid-feedback" role="alert">
                     Password yang Anda masukkan tidak sama!
                 </div>
@@ -58,6 +59,11 @@
             </div>
           </form>
         </div>
+        @if ($message = Session::get('error'))
+          <x-alert msg="{{$message}}"></x-alert>
+        @elseif($errors->any())
+          <x-alert msg="{{$errors->first()}}"></x-alert>
+        @endif
       </div>
     </div>
 

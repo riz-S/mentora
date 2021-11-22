@@ -20,6 +20,9 @@ class EditProfilControl extends Controller
         $mentee = Auth::user();
         $validatedData = $request->validate([
             'name' => 'required'
+        ],
+        [
+            'name.required' => 'Mohon masukan nama Anda dengan benar!'
         ]);
         $mentee->name = $request->name;
         $mentee->save();

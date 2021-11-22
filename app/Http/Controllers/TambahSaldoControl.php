@@ -15,7 +15,10 @@ class TambahSaldoControl extends Controller
     }
     public function tambahSaldo(Request $request){
         $kode = $request->kode;
-        $voucher = Voucher::where('kode',$kode)->get()[0];
+        $voucher = Voucher::where('kode',$kode)->first();
+        if($voucher==null||$voucher->statusPakai==1){
+            return redirect()->back()->with("error","Oh no! Voucher is invalid");
+        }
         $mentee = Auth::user();
         $mentee->saldo += $voucher->balance;
         $mentee -> save();

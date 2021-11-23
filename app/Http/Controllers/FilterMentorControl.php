@@ -18,7 +18,7 @@ class FilterMentorControl extends Controller
         $listMentor = is_array(json_decode($request->listMentor))?json_decode($request->listMentor):array(json_decode($request->listMentor));
         $kategori = $request->filterCategory;
         $skill = $request->filterSkill;
-        $rentangHarga = ($request->filterHarga!=null)?explode(",",$request->filterHarga):null;
+        $rentangHarga = $request->filterHarga;
         if($kategori!=null){
             $category = function ($var) use ($kategori) {return $var->category->name == $kategori;};
             $listMentor = array_values(array_filter($listMentor, $category));
@@ -34,6 +34,7 @@ class FilterMentorControl extends Controller
             $listMentor = array_values(array_filter($listMentor, $skill));
         }
         if($rentangHarga!=null){
+            $rentangHarga = explode(",",$rentangHarga);
             $range = function ($var) use ($rentangHarga) {return $var->price >= $rentangHarga[0] && $var->price <= $rentangHarga[1];};
             $listMentor = array_values(array_filter($listMentor, $range));
         }

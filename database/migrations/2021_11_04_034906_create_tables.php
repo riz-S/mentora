@@ -33,7 +33,7 @@ class CreateTables extends Migration
             $table->id('invoiceId');//Primary key
             $table->integer('jumlahSesi');
             $table->string('statusPemesanan')->default('Pending');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamp('updated_at')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
             $table->unsignedBigInteger('menteeId');
